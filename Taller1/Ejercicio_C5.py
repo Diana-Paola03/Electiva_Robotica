@@ -2,53 +2,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 
-def funcion_transferencia_segundo_orden(w_n, zeta):
-    num = [w_n**2]
-    den = [1, 2 * zeta * w_n, w_n**2]
-    return num, den
+# KAREN
+def dibujar_nombre_karen():
+    plt.text(0.0, 0.5, 'K', fontsize=100, color='blue')
+    plt.text(0.1, 0.5, 'A', fontsize=100, color='blue')
+    plt.text(0.2, 0.5, 'R', fontsize=100, color='blue')
+    plt.text(0.3, 0.5, 'E', fontsize=100, color='blue')
+    plt.text(0.4, 0.5, 'N', fontsize=100, color='blue')
 
-def tipo_sistema(zeta):
-    if zeta < 1:
-        return "Subamortiguado"
-    elif zeta == 1:
-        return "Críticamente Amortiguado"
-    else:
-        return "Sobreamortiguado"
+# DIANA
+def dibujar_nombre_diana():
+    plt.text(0.55, 0.5, '&', fontsize=100, color='magenta')
+    plt.text(0.7, 0.5, 'D', fontsize=100, color='green')
+    plt.text(0.82, 0.5, 'I', fontsize=100, color='green')
+    plt.text(0.86, 0.5, 'A', fontsize=100, color='green')
+    plt.text(0.97, 0.5, 'N', fontsize=100, color='green') 
+    plt.text(1.1, 0.5, 'A', fontsize=100, color='green')
 
-def graficar_respuesta(t, y, tipo):
-    plt.figure(figsize=(10, 6))
-    plt.plot(t, y, label="Respuesta del sistema")
-    plt.title(f"Respuesta del sistema ({tipo})")
-    plt.xlabel("Tiempo (s)")
-    plt.ylabel("Respuesta")
-    plt.grid(True)
-    plt.legend()
-    plt.show()
+# plot
+plt.figure(figsize=(10, 4))
+plt.axis('off')  # Ocultar los ejes
 
-def main():
-    w_n = float(input("Ingrese la frecuencia natural (w_n) del sistema: "))
-    zeta = float(input("Ingrese el coeficiente de amortiguamiento (zeta) del sistema: "))
-    K = float(input("Ingrese la ganancia (K) del sistema: "))
+# Dibujar
+dibujar_nombre_karen()
+dibujar_nombre_diana()
 
-    # función de transferencia
-    num, den = funcion_transferencia_segundo_orden(w_n, zeta)
-    sys = signal.TransferFunction([K * coeficiente for coeficiente in num], den)
-
-    # tipo de sistema
-    tipo = tipo_sistema(zeta)
-    print(f"El sistema es: {tipo}")
-
-    # respuesta del sistema
-    t = np.linspace(0, 20, 1000)
-
-    # Generar entrada paso para el sistema
-    _, u = signal.step(sys, T=t)
-
-    # Calcular la respuesta del sistema
-    _, y, _ = signal.lsim(sys, U=u, T=t)
-
-    # Graficar la respuesta
-    graficar_respuesta(t, y, tipo)
-
-if __name__ == "__main__":
-    main()
+# Mostrar el plot
+plt.show()

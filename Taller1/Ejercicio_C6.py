@@ -24,7 +24,6 @@ def main():
     imagenes = [
         'C:/Users/diana/Pictures/ejercicio_6/Renault.PNG',
         'C:/Users/diana/Pictures/ejercicio_6/mazda png.png' 
-        #'C:/Users/diana/Pictures/ejercicio_6/renault-logo.png'
     ]
 
     for imagen_path in imagenes:
