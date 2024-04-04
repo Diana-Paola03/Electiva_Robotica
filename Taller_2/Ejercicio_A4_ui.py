@@ -89,9 +89,9 @@ class Ui_MainWindow(object):
         self.ax.set_ylabel('Carga/Descarga del Condensador')
     
     def update_plot(self):
-        R = self.horizontalSlider.value()
+        R = self.horizontalSlider.value() * 1000  # Convertir a ohmios
         V = self.horizontalSlider_2.value()
-        C = self.horizontalSlider_3.value()
+        C = self.horizontalSlider_3.value() / 1000000  # Convertir a faradios
         time = np.linspace(0, 10, 100)
         tau = R * C
         voltage_charge = V * (1 - np.exp(-time / tau))  # Fórmula de carga
@@ -105,9 +105,9 @@ class Ui_MainWindow(object):
         self.ax.legend()
         self.canvas.draw_idle()
 
-        self.label_6.setText(str(R))
-        self.label_7.setText(str(V))
-        self.label_8.setText(str(C))
+        self.label_6.setText(str(R / 1000) + " kΩ")  # Mostrar en kiloohmios
+        self.label_7.setText(str(V) + " V")
+        self.label_8.setText(str(C * 1000000) + " µF")  # Mostrar en microfaradios
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -122,9 +122,9 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">2024-1</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.label.setText(_translate("MainWindow", "Resistencia (Ω)"))
+        self.label.setText(_translate("MainWindow", "Resistencia (KΩ)"))
         self.label_4.setText(_translate("MainWindow", "Voltaje (V)"))
-        self.label_5.setText(_translate("MainWindow", "Capacitancia (F)"))
+        self.label_5.setText(_translate("MainWindow", "Capacitancia (µF)"))
 
 
 if __name__ == "__main__":
