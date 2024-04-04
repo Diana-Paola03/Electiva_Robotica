@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Ejercicio_5A_ui.ui'
+# Form implementation generated from reading ui file 'Ejercicio_A5_ui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import cv2
 from PyQt5.QtGui import QImage, QPixmap
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -19,10 +20,10 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(552, 57, 221, 41))
+        self.pushButton.setGeometry(QtCore.QRect(480, 70, 221, 41))
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(550, 110, 221, 41))
+        self.pushButton_2.setGeometry(QtCore.QRect(480, 140, 221, 41))
         self.pushButton_2.setObjectName("pushButton_2")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(30, 70, 421, 391))
@@ -31,19 +32,20 @@ class Ui_MainWindow(object):
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(530, 180, 261, 141))
+        self.label_2.setGeometry(QtCore.QRect(460, 200, 261, 141))
         self.label_2.setObjectName("label_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(530, 350, 251, 151))
+        self.label_3.setGeometry(QtCore.QRect(470, 350, 251, 151))
         self.label_3.setPixmap(QtGui.QPixmap("ecci.jpg"))
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(270, 20, 321, 41))
+        self.label_4.setObjectName("label_4")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
         self.menubar.setObjectName("menubar")
-        self.menuFile = QtWidgets.QMenu(self.menubar)
-        self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -52,15 +54,12 @@ class Ui_MainWindow(object):
         self.actionExit.setObjectName("actionExit")
         self.actionOpen = QtWidgets.QAction(MainWindow)
         self.actionOpen.setObjectName("actionOpen")
-        self.menuFile.addSeparator()
-        self.menuFile.addAction(self.actionExit)
-        self.menuFile.addAction(self.actionOpen)
-        self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         self.pushButton.clicked.connect(self.label.clear) # type: ignore
         self.pushButton_2.clicked.connect(self.label.clear) # type: ignore
-       
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
         self.pushButton.clicked.connect(self.load_image)
         self.pushButton_2.clicked.connect(self.clear_contours)
 
@@ -81,10 +80,10 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt;\">2024-1</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.label_4.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">Contornos de Imagenes</span></p></body></html>"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
-
+    
     def load_image(self):
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Seleccionar Imagen", "", "Archivos de Imagen (*.png *.jpg *.jpeg)")
         if filename:
@@ -103,6 +102,9 @@ class Ui_MainWindow(object):
 
     def clear_contours(self):
         self.label.clear()
+
+
+
 
 if __name__ == "__main__":
     import sys
