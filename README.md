@@ -1,3 +1,2 @@
-hola
-
-hola 2024
+Electiva de robotica
+Diana Avendaño y Karen Mantilla
