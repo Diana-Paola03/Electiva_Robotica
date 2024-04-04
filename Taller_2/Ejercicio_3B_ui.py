@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Ejercicio_3A_ui.ui'
+# Form implementation generated from reading ui file 'Ejercicio_3B_ui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -9,23 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import smbus
-import time
 
-# Dirección del sensor HMC5883L
-HMC5883L_ADDRESS = 0x1E
-
-# Registro de control
-HMC5883L_REGISTER_MODE = 0x02
-
-# Modo de operación continuo
-HMC5883L_MODE_CONTINUOUS = 0x00
-
-# Registro de datos de lectura
-HMC5883L_REGISTER_DATA = 0x03
-
-# Factor de conversión para convertir valores crudos en micro teslas
-CONVERSION_FACTOR = 0.92
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -72,9 +56,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # Conexión de la señal del botón con el método para iniciar la lectura del sensor
-        self.pushButton.clicked.connect(self.read_sensor)
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -93,44 +74,9 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Inserte el tiempo (s):"))
         self.label_6.setText(_translate("MainWindow", "Lectura Sensor :"))
 
-    # Método para iniciar la lectura del sensor
-    def read_sensor(self):
-        # Obtener el tiempo de lectura ingresado por el usuario
-        time_seconds = int(self.textEdit.toPlainText())
-
-        # Inicializar el bus I2C
-        bus = smbus.SMBus(1)
-
-        # Configurar el modo de operación continuo en el sensor HMC5883L
-        bus.write_byte_data(HMC5883L_ADDRESS, HMC5883L_REGISTER_MODE, HMC5883L_MODE_CONTINUOUS)
-
-        # Esperar un tiempo para que el sensor estabilice
-        time.sleep(0.1)
-
-        # Realizar la lectura del sensor y mostrarla en el QTextEdit
-        start_time = time.time()
-        while (time.time() - start_time) < time_seconds:
-            # Leer los datos del sensor
-            data = bus.read_i2c_block_data(HMC5883L_ADDRESS, HMC5883L_REGISTER_DATA, 6)
-
-            # Convertir los datos en valores de ángulos
-            x = data[0] << 8 | data[1]
-            z = data[2] << 8 | data[3]
-            y = data[4] << 8 | data[5]
-
-            # Calcular el ángulo
-            angle = round((180 * (180 * (math.atan2(y, x) / math.pi)) / 360), 2)
-
-            # Actualizar el texto en el QTextEdit
-            self.textEdit.setPlainText("Ángulo: {} grados".format(angle))
-
-            # Esperar un breve tiempo antes de la próxima lectura
-            time.sleep(0.5)
-
 
 if __name__ == "__main__":
     import sys
-    import math
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
