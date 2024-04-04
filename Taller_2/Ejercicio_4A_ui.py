@@ -94,12 +94,15 @@ class Ui_MainWindow(object):
         C = self.horizontalSlider_3.value()
         time = np.linspace(0, 10, 100)
         tau = R * C
-        voltage = V * (1 - np.exp(-time / tau))
+        voltage_charge = V * (1 - np.exp(-time / tau))  # Fórmula de carga
+        voltage_discharge = V * np.exp(-time / tau)  # Fórmula de descarga
 
         self.ax.clear()
-        self.ax.plot(time, voltage)
+        self.ax.plot(time, voltage_charge, label='Carga')
+        self.ax.plot(time, voltage_discharge, label='Descarga')
         self.ax.set_xlabel('Tiempo')
         self.ax.set_ylabel('Carga/Descarga del Condensador')
+        self.ax.legend()
         self.canvas.draw_idle()
 
         self.label_6.setText(str(R))

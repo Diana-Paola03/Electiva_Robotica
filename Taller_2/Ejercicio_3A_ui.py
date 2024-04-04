@@ -99,19 +99,19 @@ class Ui_MainWindow(object):
             scene = QtWidgets.QGraphicsScene()
             scene.addPixmap(pixmap)
             self.graphicsView.setScene(scene)
-            self.textEdit.setPlainText("Articulaciones: 3 - Tipo: Prismatica")
+            self.textEdit.setPlainText("3 articulaciones prismáticas")
         elif seleccion == "Esferico":
             pixmap = QtGui.QPixmap('esferico.png')
             scene = QtWidgets.QGraphicsScene()
             scene.addPixmap(pixmap)
             self.graphicsView.setScene(scene)
-            self.textEdit.setPlainText("Articulaciones: 2 - Tipo: Esferica")
+            self.textEdit.setPlainText("3 articulaciones (2 rotacionales y 1 prismática)")
         elif seleccion == "Cilindrico":
             pixmap = QtGui.QPixmap('cilindrico.png')
             scene = QtWidgets.QGraphicsScene()
             scene.addPixmap(pixmap)
             self.graphicsView.setScene(scene)
-            self.textEdit.setPlainText("Articulaciones: 2 - Tipo: Rotacional y Prismatica")
+            self.textEdit.setPlainText("3 articulaciones (1 rotacional y 2 prismáticas)")
 
 if __name__ == "__main__":
     import sys
