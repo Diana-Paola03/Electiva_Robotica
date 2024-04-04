@@ -11,15 +11,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import RPi.GPIO as GPIO
 
-# Configuración de los pines GPIO para los LED
+# Configuración de los pines GPIO para los LED y botones
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(13, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)  # LED 1
+GPIO.setup(13, GPIO.OUT)  # LED 2
+GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Botón para LED 3
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Botón para LED 4
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(463, 532)
+        MainWindow.resize(481, 532)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
@@ -32,13 +34,11 @@ class Ui_MainWindow(object):
         self.label_5.setObjectName("label_5")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(50, 270, 131, 51))
-        self.pushButton.setStyleSheet("background-color: Green;\n"
-"")
+        self.pushButton.setStyleSheet("")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(290, 270, 121, 51))
-        self.pushButton_2.setStyleSheet("background-color: yellow;\n"
-"")
+        self.pushButton_2.setStyleSheet("")
         self.pushButton_2.setObjectName("pushButton_2")
         self.verticalSlider = QtWidgets.QSlider(self.centralwidget)
         self.verticalSlider.setGeometry(QtCore.QRect(80, 30, 71, 211))
@@ -48,9 +48,15 @@ class Ui_MainWindow(object):
         self.verticalSlider_2.setGeometry(QtCore.QRect(310, 30, 71, 211))
         self.verticalSlider_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider_2.setObjectName("verticalSlider_2")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(50, 10, 61, 16))
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(300, 10, 61, 16))
+        self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 463, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 481, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -60,9 +66,11 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
-        # Conecta los botones a sus funciones correspondientes
-        self.pushButton.clicked.connect(self.toggle_led1)
-        self.pushButton_2.clicked.connect(self.toggle_led2)
+        # Conectar señales y slots
+        self.pushButton.clicked.connect(self.toggle_led3)
+        self.pushButton_2.clicked.connect(self.toggle_led4)
+        GPIO.add_event_detect(19, GPIO.FALLING, callback=self.toggle_led3, bouncetime=300)
+        GPIO.add_event_detect(26, GPIO.FALLING, callback=self.toggle_led4, bouncetime=300)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -77,22 +85,29 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">2024-1</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\"><br /></span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\"><br /></span></p></body></html>"))
-        self.pushButton.setText(_translate("MainWindow", "LED 1 "))
-        self.pushButton_2.setText(_translate("MainWindow", "LED 2"))
+        self.pushButton.setText(_translate("MainWindow", "LED 3"))
+        self.pushButton_2.setText(_translate("MainWindow", "LED 4"))
+        self.label.setText(_translate("MainWindow", "Led 1:"))
+        self.label_2.setText(_translate("MainWindow", "Led 2:"))
 
-    # Función para alternar el estado del LED 1
-    def toggle_led1(self):
-        if GPIO.input(12):
-            GPIO.output(12, GPIO.LOW)
+    # Función para alternar el estado del LED 3
+    def toggle_led3(self):
+        if GPIO.input(19):
+            self.pushButton.setStyleSheet("background-color: Green;")
+            GPIO.output(12, GPIO.HIGH)  # Encender LED 3
         else:
-            GPIO.output(12, GPIO.HIGH)
+            self.pushButton.setStyleSheet("")
+            GPIO.output(12, GPIO.LOW)  # Apagar LED 3
     
-    # Función para alternar el estado del LED 2
-    def toggle_led2(self):
-        if GPIO.input(13):
-            GPIO.output(13, GPIO.LOW)
+    # Función para alternar el estado del LED 4
+    def toggle_led4(self):
+        if GPIO.input(26):
+            self.pushButton_2.setStyleSheet("background-color: Yellow;")
+            GPIO.output(13, GPIO.HIGH)  # Encender LED 4
         else:
-            GPIO.output(13, GPIO.HIGH)
+            self.pushButton_2.setStyleSheet("")
+            GPIO.output(13, GPIO.LOW)  # Apagar LED 4
+
 
 if __name__ == "__main__":
     import sys
@@ -102,3 +117,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+    

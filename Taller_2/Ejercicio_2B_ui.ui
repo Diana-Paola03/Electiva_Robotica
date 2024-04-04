@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>463</width>
+    <width>481</width>
     <height>532</height>
    </rect>
   </property>
@@ -62,11 +62,10 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: Green;
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
-     <string>LED 1 </string>
+     <string>LED 3</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -79,11 +78,10 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: yellow;
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
-     <string>LED 2</string>
+     <string>LED 4</string>
     </property>
    </widget>
    <widget class="QSlider" name="verticalSlider">
@@ -112,13 +110,39 @@ p, li { white-space: pre-wrap; }
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Led 1:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Led 2:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>463</width>
+     <width>481</width>
      <height>26</height>
     </rect>
    </property>
