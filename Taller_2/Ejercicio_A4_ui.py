@@ -92,8 +92,11 @@ class Ui_MainWindow(object):
         R = self.horizontalSlider.value() * 1000  # Convertir a ohmios
         V = self.horizontalSlider_2.value()
         C = self.horizontalSlider_3.value() / 1000000  # Convertir a faradios
-        time = np.linspace(0, 10, 100)
         tau = R * C
+
+     # Configurar el tiempo hasta 5*tau
+        time = np.linspace(0, 5 * tau, 100)
+
         voltage_charge = V * (1 - np.exp(-time / tau))  # Fórmula de carga
         voltage_discharge = V * np.exp(-time / tau)  # Fórmula de descarga
 
